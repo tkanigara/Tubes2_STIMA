@@ -1,0 +1,12 @@
+# filepath: c:\COOLYEAH\SMT_4\STIMA\coba\Tubes2_STIMA\src\frontend\railway.toml
+[build]
+# No special build steps needed as Dockerfile handles everything
+
+[deploy]
+startCommand = "/docker-entrypoint.sh"
+restartPolicyType = "on_failure"
+
+# These environment variables will be available during runtime
+[envs]
+DEPLOYMENT_ENV = "production"
+VITE_API_BASE_URL = "/api"  # Use relative URLs in Railway since both frontend and backend share the same domain

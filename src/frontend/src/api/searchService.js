@@ -10,15 +10,28 @@ const FALLBACK_API_BASE_URL = "http://localhost:8080";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || FALLBACK_API_BASE_URL;
 
 // Deteksi mode development vs production untuk debugging
-const IS_PRODUCTION = import.meta.env.PROD || (import.meta.env.VITE_API_BASE_URL || '').includes('railway.app');
+const IS_PRODUCTION = import.meta.env.PROD || (import.meta.env.VITE_API_BASE_URL || '').includes('railway.app') || API_BASE_URL === '/api';
 
 console.log(`Frontend: Running in ${IS_PRODUCTION ? 'PRODUCTION' : 'DEVELOPMENT'} mode`);
 console.log("Frontend: Using API_BASE_URL:", API_BASE_URL);
 
+// Fungsi untuk membuat URL API yang benar
+// Jika API_BASE_URL adalah URL relatif (dimulai dengan /), maka gunakan origin window saat ini
+// Jika API_BASE_URL adalah URL absolut (termasuk http:// atau https://), gunakan apa adanya
+function makeApiUrl(path) {
+  // Jika API_BASE_URL adalah URL relatif (mulai dengan /)
+  if (API_BASE_URL.startsWith('/')) {
+    return `${window.location.origin}${API_BASE_URL}${path}`;
+  }
+  
+  // Jika API_BASE_URL adalah URL absolut
+  return `${API_BASE_URL}${path}`;
+}
+
 // First, try to ping the backend to ensure it's available
 async function pingBackend() {
   try {
-    const pingUrl = `${API_BASE_URL}/api/ping`;
+    const pingUrl = makeApiUrl('/ping');
     console.log(`Frontend: Pinging backend at: ${pingUrl}`);
     
     const response = await fetch(pingUrl, { 
@@ -67,8 +80,8 @@ async function findRecipes(target, algo, mode, maxRecipes) {
     params.append('max', maxRecipes.toString());
   }
 
-  // Perhatikan di sini: kita menggabungkan API_BASE_URL dengan path spesifik '/api/search'
-  const url = `${API_BASE_URL}/api/search?${params.toString()}`;
+  // Use makeApiUrl function to handle both relative and absolute URLs
+  const url = makeApiUrl('/search') + '?' + params.toString();
 
   console.log(`Frontend: Mengirim request ke: ${url}`);
 
@@ -113,8 +126,8 @@ async function findRecipes(target, algo, mode, maxRecipes) {
  * @returns {string} URL lengkap ke endpoint proxy gambar backend
  */
 function getElementImageURL(elementName) {
-  // Path '/api/image' ditambahkan di sini:
-  const imageUrl = `${API_BASE_URL}/api/image?elementName=${encodeURIComponent(elementName)}`;
+  // Use makeApiUrl function to handle both relative and absolute URLs
+  const imageUrl = makeApiUrl('/image') + `?elementName=${encodeURIComponent(elementName)}`;
   console.log(`Frontend: Generated image URL: ${imageUrl}`);
   return imageUrl;
 }

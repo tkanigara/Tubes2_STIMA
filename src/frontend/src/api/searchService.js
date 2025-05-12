@@ -7,7 +7,12 @@ const FALLBACK_API_BASE_URL = "http://localhost:8080";
 // Vite akan secara otomatis mengganti import.meta.env.VITE_API_BASE_URL
 // dengan nilai variabel lingkungan yang sesuai saat proses 'npm run build'.
 // Jika tidak ada, ia akan menggunakan FALLBACK_API_BASE_URL.
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || FALLBACK_API_BASE_URL;
+
+const isProduction = import.meta.env.PROD;
+
+console.log(`Frontend: Running in ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'} mode`);
+console.log("Frontend: Using API_BASE_URL:", API_BASE_URL);
 
 /**
  * Fungsi untuk memanggil endpoint /api/search

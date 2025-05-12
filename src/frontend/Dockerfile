@@ -7,7 +7,7 @@ COPY . .
 
 # Atur variabel environment untuk build
 # Default ke Railway URL, tapi bisa dioveride dengan build arg
-ARG VITE_API_BASE_URL="https://cozy-contentment-production-7b75.up.railway.app"
+ARG VITE_API_BASE_URL="https:/tubes2stima-production.up.railway.app"
 ARG DEPLOYMENT_ENV="production"
 ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
 ENV DEPLOYMENT_ENV=${DEPLOYMENT_ENV}

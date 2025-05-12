@@ -7,8 +7,7 @@ echo Building and starting Docker containers...
 cd %~dp0
 
 docker-compose down
-docker-compose build --no-cache frontend --build-arg VITE_API_BASE_URL=https://tubes2stima-production.up.railway.app --build-arg DEPLOYMENT_ENV=production
-docker-compose up -d
+docker-compose -f docker-compose.production.yml up -d
 
 echo.
 echo Production environment ready!

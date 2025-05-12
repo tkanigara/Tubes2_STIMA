@@ -45,6 +45,13 @@ RUN echo '#!/bin/sh' > /docker-entrypoint.sh && \
     echo '    echo "Using local configuration"' >> /docker-entrypoint.sh && \
     echo '    cp /etc/nginx/conf.d/default.conf.local /etc/nginx/conf.d/default.conf' >> /docker-entrypoint.sh && \
     echo 'fi' >> /docker-entrypoint.sh && \
+    echo '' >> /docker-entrypoint.sh && \
+    echo '# Replace backend_upstream in configuration if BACKEND_HOST is set' >> /docker-entrypoint.sh && \
+    echo 'if [ -n "$BACKEND_HOST" ]; then' >> /docker-entrypoint.sh && \
+    echo '    echo "Setting backend upstream to $BACKEND_HOST"' >> /docker-entrypoint.sh && \
+    echo '    sed -i "s/backend:8080/$BACKEND_HOST/g" /etc/nginx/conf.d/default.conf' >> /docker-entrypoint.sh && \
+    echo 'fi' >> /docker-entrypoint.sh && \
+    echo '' >> /docker-entrypoint.sh && \
     echo 'nginx -g "daemon off;"' >> /docker-entrypoint.sh && \
     chmod +x /docker-entrypoint.sh
 

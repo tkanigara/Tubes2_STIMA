@@ -16,19 +16,19 @@ services:
     restart: unless-stopped # Kebijakan restart kontainer
     networks:
       - alchemy-network
-      
-  # Layanan untuk Frontend
+        # Layanan untuk Frontend
   frontend:
     build:
       context: ./frontend # Path relatif ke direktori frontend
       dockerfile: Dockerfile
       args:
-        - VITE_API_BASE_URL=https://tubes2stima-production.up.railway.app  # For local browser access
+        - VITE_API_BASE_URL=http://localhost:8080  # For local browser access (runtime JS)
         - DEPLOYMENT_ENV=local
     image: alchemy-frontend:latest
     container_name: alchemy_frontend_container
     environment:
-      - VITE_API_BASE_URL=http://localhost:8080  # For local browser access
+      - VITE_API_BASE_URL=http://localhost:8080  # For runtime JavaScript
+      - BACKEND_HOST=backend:8080  # For Nginx proxy inside Docker network
       - DEPLOYMENT_ENV=local
     ports:
       - "3000:80" # Map port: <HOST_PORT_UNTUK_FRONTEND>:<NGINX_PORT_DI_CONTAINER>

@@ -1,0 +1,22 @@
+version: "3.8" # Menentukan versi skema Docker Compose
+
+services:
+  # Production Frontend Service (connects to Railway backend)
+  frontend:
+    build:
+      context: ./frontend # Path relatif ke direktori frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_BASE_URL=https://tubes2stima-production.up.railway.app  # For runtime JS
+        - DEPLOYMENT_ENV=production
+    image: alchemy-frontend-production:latest
+    container_name: alchemy_frontend_production_container
+    environment:
+      - VITE_API_BASE_URL=https://tubes2stima-production.up.railway.app  # For runtime JS
+      - BACKEND_HOST=tubes2stima-production.up.railway.app  # For Nginx proxy
+      - DEPLOYMENT_ENV=production
+    ports:
+      - "3000:80" # Map port: <HOST_PORT_UNTUK_FRONTEND>:<NGINX_PORT_DI_CONTAINER>
+    restart: unless-stopped
+
+# No networks needed for production since we're connecting to an external backend

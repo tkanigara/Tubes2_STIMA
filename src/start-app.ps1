@@ -21,18 +21,14 @@ switch ($Mode) {
         Write-Host "Application started in LOCAL mode!" -ForegroundColor Green
         Write-Host "Frontend: http://localhost:3000" -ForegroundColor Yellow
         Write-Host "Backend: http://localhost:8080" -ForegroundColor Yellow
-    }
-    "production" {
+    }    "production" {
         Write-Host "Starting application in PRODUCTION mode..." -ForegroundColor Blue
         
         # First stop any existing containers
         docker-compose down
         
-        # Build frontend with production config
-        docker-compose build --no-cache frontend --build-arg VITE_API_BASE_URL=https://tubes2stima-production.up.railway.app --build-arg DEPLOYMENT_ENV=production
-        
-        # Start containers
-        docker-compose up -d
+        # Start containers using production config
+        docker-compose -f docker-compose.production.yml up -d
         
         Write-Host "Application started in PRODUCTION mode!" -ForegroundColor Blue
         Write-Host "Frontend: http://localhost:3000" -ForegroundColor Yellow

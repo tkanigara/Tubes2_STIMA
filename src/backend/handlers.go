@@ -34,7 +34,14 @@ type MultiSearchResponse struct {
 func imageHandler(w http.ResponseWriter, r *http.Request) {
 	// Set CORS headers agar frontend bisa mengakses
 	w.Header().Set("Access-Control-Allow-Origin", "*")             // Izinkan akses dari origin manapun
+	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS") // Methods yang diizinkan
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type") // Header yang diizinkan
+
+	// Handle preflight requests
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
 
 	// Hanya izinkan metode GET
 	if r.Method != http.MethodGet {
@@ -125,13 +132,24 @@ func imageHandler(w http.ResponseWriter, r *http.Request) {
 func searchHandler(w http.ResponseWriter, r *http.Request) {
 	// Set CORS headers
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+	// Handle preflight requests
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
 
 	// Hanya izinkan metode GET
 	if r.Method != http.MethodGet {
+		log.Printf("Method not allowed: %s", r.Method)
 		http.Error(w, "Metode tidak diizinkan", http.StatusMethodNotAllowed)
 		return
 	}
+
+	// Log request
+	log.Printf("Received search request from %s: %s", r.RemoteAddr, r.URL.String())
 
 	// 1. Ambil Query Parameters
 	targetElement := strings.TrimSpace(r.URL.Query().Get("target"))

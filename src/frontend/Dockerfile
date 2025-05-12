@@ -6,11 +6,19 @@ RUN npm ci
 COPY . .
 
 # Atur variabel environment untuk build
-# Default ke Railway URL, tapi bisa dioveride dengan build arg
-ARG VITE_API_BASE_URL="https:/tubes2stima-production.up.railway.app"
-ARG DEPLOYMENT_ENV="production"
+# Default ke localhost untuk development (akan dioveride dengan build arg)
+ARG VITE_API_BASE_URL="http://localhost:8080"
+ARG DEPLOYMENT_ENV="local"
 ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
 ENV DEPLOYMENT_ENV=${DEPLOYMENT_ENV}
+
+# Debug - tampilkan nilai variabel lingkungan
+RUN echo "Building with VITE_API_BASE_URL=${VITE_API_BASE_URL}"
+RUN echo "Building with DEPLOYMENT_ENV=${DEPLOYMENT_ENV}"
+
+# Create .env file for Vite
+RUN echo "VITE_API_BASE_URL=${VITE_API_BASE_URL}" > .env
+RUN echo "DEPLOYMENT_ENV=${DEPLOYMENT_ENV}" >> .env
 
 # Build aplikasi
 RUN npm run build

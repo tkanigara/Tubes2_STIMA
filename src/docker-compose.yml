@@ -16,20 +16,24 @@ services:
     restart: unless-stopped # Kebijakan restart kontainer
     networks:
       - alchemy-network
+      
   # Layanan untuk Frontend
   frontend:
     build:
       context: ./frontend # Path relatif ke direktori frontend
       dockerfile: Dockerfile
       args:
-        - VITE_API_BASE_URL=http://backend:8080  # Untuk komunikasi antar container
+        - VITE_API_BASE_URL=http://localhost:8080  # For local browser access
         - DEPLOYMENT_ENV=local
-    image: alchemy-frontend:latest # (Opsional tapi baik)
+    image: alchemy-frontend:latest
     container_name: alchemy_frontend_container
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8080  # For local browser access
+      - DEPLOYMENT_ENV=local
     ports:
       - "3000:80" # Map port: <HOST_PORT_UNTUK_FRONTEND>:<NGINX_PORT_DI_CONTAINER>
     depends_on:
-      - backend # Frontend akan menunggu backend dimulai terlebih dahulu
+      - backend
     restart: unless-stopped
     networks:
       - alchemy-network

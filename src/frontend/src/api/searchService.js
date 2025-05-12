@@ -2,7 +2,7 @@
 
 // Ini akan menjadi URL fallback jika VITE_API_BASE_URL tidak diset saat proses build.
 // Sangat berguna untuk pengembangan lokal jika Anda tidak membuat file .env.development.
-const FALLBACK_API_BASE_URL = "https://tubes2stima-production.up.railway.app";
+const FALLBACK_API_BASE_URL = "https://cozy-contentment-production-7b75.up.railway.app";
 
 // Vite akan secara otomatis mengganti import.meta.env.VITE_API_BASE_URL
 // dengan nilai variabel lingkungan yang sesuai saat proses 'npm run build'.

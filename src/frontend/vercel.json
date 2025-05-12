@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://tubes2stima-production.up.railway.app/api/:path*"
+      "destination": "https://cozy-contentment-production-7b75.up.railway.app/api/:path*"
     }
   ],
   "headers": [

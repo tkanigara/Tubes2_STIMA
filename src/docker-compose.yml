@@ -23,7 +23,7 @@ services:
       context: ./frontend # Path relatif ke direktori frontend
       dockerfile: Dockerfile
       args:
-        API_URL: https://tubes2stima-production.up.railway.app # URL API backend
+        API_URL: https://cozy-contentment-production-7b75.up.railway.app # URL API backend
     image: alchemy-frontend:latest # (Opsional tapi baik)
     container_name: alchemy_frontend_container
     ports:

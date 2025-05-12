@@ -2,7 +2,7 @@
 
 // Ini akan menjadi URL fallback jika VITE_API_BASE_URL tidak diset saat proses build.
 // Sangat berguna untuk pengembangan lokal jika Anda tidak membuat file .env.development.
-const FALLBACK_API_BASE_URL = "http://localhost:8080";
+const FALLBACK_API_BASE_URL = "https://tubes2stima-production.up.railway.app";
 
 // Vite akan secara otomatis mengganti import.meta.env.VITE_API_BASE_URL
 // dengan nilai variabel lingkungan yang sesuai saat proses 'npm run build'.
@@ -30,7 +30,7 @@ async function findRecipes(target, algo, mode, maxRecipes) {
   }
 
   // Perhatikan di sini: kita menggabungkan API_BASE_URL dengan path spesifik '/api/search'
-  const url = `${API_BASE_URL}/api/search?${params.toString()}`;
+  const url = `/api/search?${params.toString()}`;
 
   console.log(`Frontend: Mengirim request ke: ${url}`);
 

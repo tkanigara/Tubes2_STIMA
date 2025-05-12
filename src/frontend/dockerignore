@@ -1,0 +1,25 @@
+# Node modules - akan diinstal di dalam container
+node_modules
+
+# File build lokal (jika ada, Vite biasanya output ke 'dist')
+# Kita akan build di dalam Docker, jadi tidak perlu menyalin build lokal
+dist
+build
+.vite # Cache Vite
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# File spesifik OS atau editor
+.DS_Store
+.env.local
+.env.*.local
+.vscode/
+.idea/
+
+# Git
+.git
+.gitignore

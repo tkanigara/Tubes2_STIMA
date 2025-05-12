@@ -1,0 +1,21 @@
+# Git
+.git
+.gitignore
+
+# File spesifik OS atau editor (sesuaikan jika perlu)
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+.vscode/
+.idea/
+*.DS_Store
+
+# Log files
+*.log
+
+# Dependensi yang di-vendor (jika Anda menggunakan vendoring dan tidak mau menyalinnya)
+# vendor/

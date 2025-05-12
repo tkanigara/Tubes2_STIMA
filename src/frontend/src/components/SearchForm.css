@@ -1,0 +1,180 @@
+/* frontend/src/components/SearchForm.css */
+
+.search-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0px;
+  border: 1px solid #000000;
+  border-radius: 1px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #e0e0e0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-and-algo-group {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: flex-start; /* Label dan title akan align di atas */
+  flex-wrap: wrap;
+}
+
+.target-input-group {
+  display: flex;
+  flex-direction: column; /* Label di atas input */
+  /* flex-grow: 1; Dihapus agar lebarnya ditentukan oleh .form-input di bawahnya */
+  /* min-width: 200px; Dihapus atau disesuaikan agar tidak konflik dengan lebar input tetap */
+}
+
+.form-label,
+.options-title,
+.max-recipes-label {
+  font-size: 0.95em;
+  margin-bottom: 8px;
+  color: #FFA500;
+  font-weight: 500;
+}
+
+.form-input{
+   background-color: #000000;
+  color: #FFA500;
+  border: 1px solid #FFA500;
+  border-radius: 1px;
+  padding: 0 10px; /* DIUBAH: Padding vertikal 0 karena height tetap, padding horizontal tetap */
+  font-size: 24px; /* Sesuaikan jika perlu agar pas di dalam height */
+  font-family: inherit;
+  /* width: 100%; Dihapus */
+  width: 100%;  /* DIUBAH: Atur lebar yang sama dengan .radio-label. Sesuaikan nilai ini. */
+  height: 80px; /* DIUBAH: Atur tinggi yang sama dengan .radio-label. */
+  display: flex; /* Untuk memusatkan teks di dalam input jika perlu (opsional) */
+  align-items: center; /* Pusatkan teks secara vertikal di dalam input (opsional) */
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.max-recipes-input {
+  background-color: #000000;
+  color: #FFA500;
+  border: 1px solid #FFA500;
+  border-radius: 1px;
+  padding: 0 10px; /* DIUBAH: Padding vertikal 0 karena height tetap, padding horizontal tetap */
+  font-size: 24px; /* Sesuaikan jika perlu agar pas di dalam height */
+  font-family: inherit;
+  /* width: 100%; Dihapus */
+  width: 100%;  /* DIUBAH: Atur lebar yang sama dengan .radio-label. Sesuaikan nilai ini. */
+  height: 80px; /* DIUBAH: Atur tinggi yang sama dengan .radio-label. */
+  display: flex; /* Untuk memusatkan teks di dalam input jika perlu (opsional) */
+  align-items: center; /* Pusatkan teks secara vertikal di dalam input (opsional) */
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.form-input:focus,
+.max-recipes-input:focus {
+  border-color: #FFFF00;
+  color: #FFFF00;
+  box-shadow: 0 0 0 3px rgba(255, 255, 0, 0.2);
+  outline: none;
+}
+
+.form-options-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.algo-group {
+ flex-basis: auto;
+ flex-grow: 1; /* Biarkan grup algoritma mengambil sisa ruang jika ada */
+ /* min-width: 320px; Dihapus atau disesuaikan, karena lebar tombol radio tetap */
+}
+
+.mode-group {
+ /* min-width: 220px; Dihapus atau disesuaikan */
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.radio-input {
+  display: none;
+}
+
+.radio-label { /* Tombol BFS, DFS, BDS */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 17.5%;  /* DIUBAH: Atur lebar tetap. Sesuaikan nilai ini. (Sebelumnya min-width: 100px) */
+  height: 80px; /* Tinggi tetap, sudah ada */
+  padding: 0 100px;
+  border: 1px solid #FFA500;
+  border-radius: 1px;
+  background-color: #000000;
+  color: #FFA500;
+  font-size: 25px; /* Sesuaikan jika perlu agar teks pas */
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.radio-label:hover {
+  border-color: #FFD700;
+  color: #FFD700;
+}
+
+.radio-input:checked + .radio-label {
+  background-color: #000000;
+  color: #FFFF00;
+  border-color: #FFFF00;
+  font-weight: bold;
+  box-shadow: 0 0 8px rgba(255, 255, 0, 0.3);
+}
+
+.max-recipes-group {
+  margin-top: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.submit-button {
+  background-color: #FFA500;
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  padding: 12px 20px;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease, border-color 0.3s ease;
+  align-self: center;
+  min-width: 150px;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: #FFD700;
+  color: #000000;
+  border-color: #000000;
+  transform: translateY(-2px);
+}
+
+.submit-button:active:not(:disabled) {
+  background-color: #FFFF00;
+  transform: translateY(0px);
+}
+
+.submit-button:disabled {
+  background-color: #555;
+  color: #999;
+  border-color: #555;
+  cursor: not-allowed;
+}

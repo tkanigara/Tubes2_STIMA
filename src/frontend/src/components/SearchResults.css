@@ -1,0 +1,247 @@
+/* frontend/src/components/SearchResults.css */
+
+.search-results-container {
+  color: #e0e0e0;
+  font-family: 'Pixelify Sans', sans-serif;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.results-title {
+  font-size: 1.4em;
+  color: #00ffff;
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+  padding-bottom: 10px;
+}
+
+.results-title .target-element {
+  color: #FFA500;
+  font-weight: bold;
+}
+
+.results-title .search-info {
+  font-size: 0.7em;
+  color: #cccccc;
+  margin-left: 10px;
+  font-weight: normal;
+}
+
+.search-stats {
+  display: flex;
+  gap: 20px;
+  font-size: 0.85em;
+  color: #b0b0b0;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #333;
+}
+
+.search-stats span strong {
+  color: #FFA500;
+}
+
+.base-element-message,
+.path-not-found-message,
+.initial-message,
+.loading-message,
+.error-message {
+  font-size: 1em;
+  color: #cccccc;
+  padding: 20px;
+  text-align: center;
+  border: 1px dashed #444;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.error-message {
+  color: #ff6b6b;
+  border-color: #ff6b6b;
+}
+
+/* PERUBAHAN UTAMA UNTUK TATA LETAK KIRI-KANAN */
+.path-block {
+  display: flex;
+  flex-direction: row; /* Mengatur anak-anaknya (kolom detail & kolom visualisasi) berdampingan */
+  gap: 20px; /* Jarak antara kolom kiri dan kanan */
+  margin-bottom: 25px;
+  padding: 15px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background-color: rgba(10, 10, 10, 0.5);
+}
+
+.path-details-column { /* Kolom kiri untuk teks dan tombol */
+  flex: 1 1 45%; /* Ambil sekitar 45% lebar, bisa disesuaikan */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Jarak antara teks dan tombol */
+  min-width: 0; /* Mencegah overflow jika konten terlalu panjang */
+}
+
+.path-text-section {
+  overflow-y: auto;
+  max-height: 350px; /* Sesuaikan tinggi maksimum untuk daftar teks */
+  padding: 10px;
+  border: 1px solid #222;
+  border-radius: 4px; /* Tambahkan border-radius */
+  background-color: rgba(0,0,0,0.2); /* Latar belakang sedikit berbeda untuk teks */
+  min-height: 100px; /* Pastikan area teks terlihat */
+  box-sizing: border-box;
+}
+
+.live-update-button {
+  background-color: #000000;
+  color: #b47e18;
+  border: 1px solid #b47e18;
+  border-radius: 5px;
+  padding: 10px 18px;
+  font-size: 0.9em;
+  font-weight: bold;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease, border-color 0.3s ease;
+  align-self: flex-start; /* Tombol rata kiri di dalam kolomnya */
+  min-width: 180px;
+  margin-top: 5px; /* Jarak dari atas jika ada elemen di atasnya */
+}
+
+.live-update-button:hover:not(:disabled) {
+  color: #fbff00;
+  border-color: #fbff00;
+  transform: translateY(-2px);
+}
+
+.live-update-button:active:not(:disabled) {
+  background-color: #FFFF00;
+  transform: translateY(0px);
+}
+
+.live-update-button:disabled {
+  cursor: not-allowed;
+}
+
+.path-visualization-column { /* Kolom kanan untuk visualisasi */
+  flex: 1 1 55%; /* Ambil sisa lebar, bisa disesuaikan */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Pusatkan judul dan tree-wrapper */
+  min-width: 0; /* Mencegah overflow */
+}
+
+.visualization-title-small {
+  font-size: 1em; /* Sebelumnya 1em, bisa disesuaikan */
+  color: #00ffff;
+  margin-top: 0; /* Hapus margin atas jika ini judul pertama di kolomnya */
+  margin-bottom: 8px;
+  align-self: flex-start; /* Judul rata kiri */
+}
+
+.recipe-path-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 5px;
+  font-size: 0.9em;
+}
+.recipe-path-list-empty {
+    color: #888;
+    font-style: italic;
+    padding: 10px 0; /* Beri padding agar terlihat */
+}
+
+.recipe-step-item {
+  padding: 6px 0;
+  border-bottom: 1px solid #2a2a2a;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  min-height: 28px;
+}
+
+.recipe-step-item:last-child { border-bottom: none; }
+.recipe-step-image { width: 24px; height: 24px; margin-right: 5px; vertical-align: middle; border-radius: 3px; background-color: #222; }
+.img-placeholder, .img-placeholder-small { display: inline-block; width: 24px; height: 24px; margin-right: 5px; background-color: #282828; border: 1px dashed #444; border-radius: 3px; box-sizing: border-box; }
+.img-placeholder-small { width: 20px; height: 20px; }
+.recipe-step-separator { color: #FFA500; margin: 0 5px; }
+.recipe-step-result { color: #00ffff; font-weight: bold; }
+
+.tree-wrapper {
+  width: 100%;
+  height: 450px;
+  border-radius: 4px;
+  border: 1px solid #222;
+  overflow: hidden;
+  background-color: #0d0d0d;
+}
+
+.tree-node .node-circle-bg { stroke: #555; stroke-width: 1px; transition: fill 0.3s ease, stroke 0.3s ease; }
+.tree-node.node-element .node-circle-bg { fill: #2a2a2a; }
+.tree-node.node-base-element .node-circle-bg { fill: #1a3a1a; stroke: #00ff00;}
+.tree-node.node-recipe .node-circle-bg { fill: #3a2a1a; stroke: #FFA500;}
+.tree-node.node-error .node-circle-bg { fill: #4a1a1a; stroke: #ff6b6b;}
+.tree-node:hover .node-circle-bg { fill: #444; }
+.tree-node.node-base-element:hover .node-circle-bg { fill: #2a5a2a; }
+.tree-node.node-recipe:hover .node-circle-bg { fill: #5a4a3a; }
+
+.node-text { font-family: 'Pixelify Sans', sans-serif; pointer-events: none; fill: #e0e0e0; font-size: 0.8em; }
+.tree-node.node-base-element .node-text { fill: #8fbc8f; }
+.tree-node.node-recipe .node-text { fill: #FFA500; font-size: 1.1em; font-weight: bold; }
+.tree-node.node-error .node-text { fill: #ff8c8c; font-size: 0.7em; }
+
+.element-image { pointer-events: none; }
+.rd3t-link { stroke: #666 !important; stroke-width: 1.5px !important; fill: none !important; }
+
+.image-urls-details { margin-top: 20px; border: 1px solid #333; border-radius: 4px; background-color: rgba(10,10,10, 0.3); }
+.image-urls-summary { padding: 10px; cursor: pointer; color: #00ffff; font-weight: bold; outline: none; }
+.image-urls-summary:hover { background-color: rgba(0, 255, 255, 0.1); }
+.image-urls-list { list-style-type: none; padding: 0 15px 15px 15px; max-height: 200px; overflow-y: auto; }
+.image-urls-item { display: flex; align-items: center; padding: 5px 0; font-size: 0.85em; border-bottom: 1px solid #2a2a2a; }
+.image-urls-item:last-child { border-bottom: none; }
+.image-urls-image { width: 20px; height: 20px; margin-right: 8px; border-radius: 3px; }
+.image-urls-name { color: #FFA500; margin-right: 5px; }
+.image-urls-link { color: #b0b0b0; text-decoration: none; word-break: break-all; }
+.image-urls-link:hover { color: #00ffff; text-decoration: underline; }
+
+.path-text-section::-webkit-scrollbar, .image-urls-list::-webkit-scrollbar { width: 6px; }
+.path-text-section::-webkit-scrollbar-track, .image-urls-list::-webkit-scrollbar-track { background: #111; border-radius: 10px; }
+.path-text-section::-webkit-scrollbar-thumb, .image-urls-list::-webkit-scrollbar-thumb { background: #555; border-radius: 10px; }
+.path-text-section::-webkit-scrollbar-thumb:hover, .image-urls-list::-webkit-scrollbar-thumb:hover { background: #777; }
+
+/* Media query untuk layar yang lebih kecil, mengembalikan ke tumpukan vertikal */
+@media (max-width: 992px) {
+  .path-block {
+    flex-direction: column; /* Kembali ke tumpukan vertikal */
+  }
+  .path-details-column,
+  .path-visualization-column {
+    flex-basis: auto; /* Biarkan tinggi menyesuaikan */
+    width: 100%; /* Mengisi lebar penuh saat ditumpuk */
+  }
+  .path-visualization-column { /* Sebelumnya .path-visualization-section */
+    margin-top: 15px;
+    min-height: 350px;
+  }
+  .tree-wrapper {
+    height: 350px;
+  }
+  .live-update-button {
+    align-self: center; /* Pusatkan tombol saat ditumpuk */
+  }
+}
+
+@media (max-width: 768px) {
+  .results-title { font-size: 1.2em; }
+  .search-stats { flex-direction: column; gap: 5px; align-items: flex-start; }
+  .path-text-section { max-height: 250px; }
+  .tree-wrapper { height: 300px; }
+  .live-update-button { padding: 8px 15px; font-size: 0.85em; min-width: 160px; }
+  .visualization-title-small { font-size: 0.95em;}
+}

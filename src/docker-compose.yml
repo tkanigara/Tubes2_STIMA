@@ -1,0 +1,40 @@
+version: "3.8" # Menentukan versi skema Docker Compose
+
+services:
+  # Layanan untuk Backend
+  backend:
+    build:
+      context: ./backend # Path relatif ke direktori backend (tempat Dockerfile backend)
+      dockerfile: Dockerfile # Nama Dockerfile (biasanya Dockerfile)
+    image: alchemy-backend:latest # (Opsional tapi baik) Memberi nama pada image yang di-build oleh compose
+    container_name: alchemy_backend_container # Memberi nama pada kontainer yang berjalan
+    ports:
+      - "8080:8080" # Map port: <HOST_PORT>:<CONTAINER_PORT>
+    # Tidak ada 'volumes' di sini karena kita asumsikan data sudah ada di dalam image backend
+    # yang dihasilkan oleh proses build Dockerfile backend (melalui RUN go run . -scrapeonly
+    # dan kemudian COPY --from=builder /app/data ./data/ di tahap runtime image backend).
+    restart: unless-stopped # Kebijakan restart kontainer
+    networks:
+      - alchemy-network
+  # Layanan untuk Frontend
+  frontend:
+    build:
+      context: ./frontend # Path relatif ke direktori frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_BASE_URL=http://backend:8080  # Untuk komunikasi antar container
+        - DEPLOYMENT_ENV=local
+    image: alchemy-frontend:latest # (Opsional tapi baik)
+    container_name: alchemy_frontend_container
+    ports:
+      - "3000:80" # Map port: <HOST_PORT_UNTUK_FRONTEND>:<NGINX_PORT_DI_CONTAINER>
+    depends_on:
+      - backend # Frontend akan menunggu backend dimulai terlebih dahulu
+    restart: unless-stopped
+    networks:
+      - alchemy-network
+
+# Mendefinisikan jaringan kustom agar kontainer bisa saling menemukan dengan nama layanannya
+networks:
+  alchemy-network:
+    driver: bridge

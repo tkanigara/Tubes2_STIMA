@@ -97,7 +97,7 @@ function SearchForm({ onSearchSubmit, isLoading }) {
             className="radio-input"
           />
           <label htmlFor="mode-shortest" className="radio-label"> {/* htmlFor merujuk ke ID input */}
-            Single
+            Shortest
           </label>
 
           {/* Opsi Multiple */}
